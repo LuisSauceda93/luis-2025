@@ -113,7 +113,7 @@ Los datos de gráficas serán simulados y constantes. No se implementará una l�
 Caracoles simulados:
 
 ```text
-Turbo, Rayo, Cometa, Relámpago, Flash y Relajado
+Theo, Chicote, Suave, Braza, Sombra y Derrape
 ```
 
 ## 6. API del sistema de cobro
