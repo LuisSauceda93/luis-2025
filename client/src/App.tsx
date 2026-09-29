@@ -216,6 +216,7 @@ function App() {
 
     localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(newUser))
     localStorage.setItem(STORAGE_KEYS.balance, '0')
+    setBalance(0)
     localStorage.setItem(
       STORAGE_KEYS.session,
       JSON.stringify({ userId: newUser.id } satisfies Session),
@@ -318,6 +319,8 @@ function App() {
     setMode('login')
     clearForm()
     clearPaymentForm()
+    setPaymentMessage('')
+    setPaymentError(false)
     setShowPaymentForm(false)
     showMessage('Sesión cerrada.')
   }
@@ -345,7 +348,46 @@ function App() {
             <strong>${balance.toFixed(2)}</strong>
           </div>
 
-          <button
+          <div className="chart-grid">
+            <section className="chart-panel">
+              <h2>Apuestas</h2>
+              <div
+                className="donut-chart"
+                style={{
+                  background: `conic-gradient(#5271ff 0 ${wonPercentage}%, #e5e9ef ${wonPercentage}% 100%)`,
+                }}
+              >
+                <div className="donut-center">
+                  <strong>{totalBets}</strong>
+                  <span>Total</span>
+                </div>
+              </div>
+              <div className="legend">
+                <span><i className="legend-dot won-dot" />Ganadas: {bettingStats.won}</span>
+                <span><i className="legend-dot lost-dot" />Perdidas: {bettingStats.lost}</span>
+              </div>
+            </section>
+
+            <section className="chart-panel">
+              <h2>Victorias por caracol</h2>
+              <div className="bar-chart">
+                {raceWins.map((race) => (
+                  <div className="bar-item" key={race.name}>
+                    <div className="bar-value">{race.wins}</div>
+                    <div className="bar-track">
+                      <div
+                        className="bar-fill"
+                        style={{ height: `${(race.wins / highestWins) * 100}%` }}
+                      />
+                    </div>
+                    <span>{race.name}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+
+                    <button
             className="primary-button"
             type="button"
             onClick={() => {
@@ -459,45 +501,6 @@ function App() {
               </form>
             </section>
           )}
-
-          <div className="chart-grid">
-            <section className="chart-panel">
-              <h2>Apuestas</h2>
-              <div
-                className="donut-chart"
-                style={{
-                  background: `conic-gradient(#5271ff 0 ${wonPercentage}%, #e5e9ef ${wonPercentage}% 100%)`,
-                }}
-              >
-                <div className="donut-center">
-                  <strong>{totalBets}</strong>
-                  <span>Total</span>
-                </div>
-              </div>
-              <div className="legend">
-                <span><i className="legend-dot won-dot" />Ganadas: {bettingStats.won}</span>
-                <span><i className="legend-dot lost-dot" />Perdidas: {bettingStats.lost}</span>
-              </div>
-            </section>
-
-            <section className="chart-panel">
-              <h2>Victorias por caracol</h2>
-              <div className="bar-chart">
-                {raceWins.map((race) => (
-                  <div className="bar-item" key={race.name}>
-                    <div className="bar-value">{race.wins}</div>
-                    <div className="bar-track">
-                      <div
-                        className="bar-fill"
-                        style={{ height: `${(race.wins / highestWins) * 100}%` }}
-                      />
-                    </div>
-                    <span>{race.name}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </div>
 
           <button className="secondary-button" type="button" onClick={handleLogout}>
             Cerrar sesión
