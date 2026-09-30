@@ -3,9 +3,11 @@ import express = require('express')
 import payment = require('./payment')
 
 const app = express()
-const port = 3000
+const port = Number(process.env.PORT) || 3000
+const clientOrigin =
+  process.env.CLIENT_ORIGIN || 'http://localhost:5173'
 
-app.use(cors({ origin: 'http://localhost:5173' }))
+app.use(cors({ origin: clientOrigin }))
 app.use(express.json())
 
 app.get('/', (_request, response) => {
