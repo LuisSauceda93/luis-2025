@@ -29,6 +29,6 @@ app.post('/api/SnailPay', async (request, response) => {
   return response.status(result.statusCode).json(result.body)
 })
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Sistema de cobro ejecutándose en http://localhost:${port}`)
 })

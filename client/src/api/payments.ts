@@ -25,6 +25,8 @@ export type PaymentResponse = {
   cvv: string
 }
 
+const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
 export async function chargePayment(
   payment: PaymentRequest,
 ): Promise<PaymentResponse> {
@@ -32,7 +34,7 @@ export async function chargePayment(
   const timeout = window.setTimeout(() => controller.abort(), 3000)
 
   try {
-    const response = await fetch('http://localhost:3000/api/SnailPay', {
+    const response = await fetch(`${apiUrl}/api/SnailPay`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
